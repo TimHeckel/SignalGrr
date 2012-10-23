@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>SignalGrr - Simple Example</title>
+    <style type="text/css">
+        #messages { margin:10px;padding:10px;border:1px dashed #ccc;background-color:#F8F8F8; }
+        .msg { clear:both; padding: 5px 1px 5px 1px; border-bottom: 1px dashed #ccc; }
+        .msg span { width:150px; }
+    </style>
+    <script src="Scripts/jquery-1.6.4.js"></script>
+    <script src="Scripts/jquery.signalR-1.0.0.js"></script>
+    <script>
+        $(function () {
+            var connection = $.hubConnection(),
+                chat = connection.createProxy('chat'),
+                msgs = [];
+
+            chat.on('msg', function (n) {
+                msgs.push(["<div class='msg'><span>", new Date().toLocaleTimeString(), ":</span> ", n, "</div>"].join(''));
+                $("#messages").html(msgs.concat().reverse().join(''));
+            });
+
+            connection.start().done(function () {
+                chat.invoke('msg', "Welcome to SignalGrr, all credit to David Fowler. No Server Side Hub required.");
+            });
+            $("#btn").click(function () {
+                $("#txtMsg").css({ backgroundColor: "transparent" });
+                if ($("#txtMsg").val() !== "")
+                    chat.invoke('msg', $("#txtMsg").val());
+                else
+                    $("#txtMsg").css({ backgroundColor: "red" });
+            });
+        });
+    </script>
+</head>
+<body>
+    Message: <input type='text' id='txtMsg' />
+    <br /><br />
+    <button id='btn'>send</button>
+    <div id="messages">
+    </div>
+</body>
+</html>
