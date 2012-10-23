@@ -1,7 +1,7 @@
 SignalGrr
 =========
 
-A SignalR server that allows hubs to be defined purely in client-side javascript.
+A SignalR server that allows hubs to be defined purely in client-side javascript. This is now available at Appharbor, just create a $.hubConnection("http(s)://signalgrr.apphb.com"). See below for a full example.
 
 This code is 100% due to the hard work of David Fowler, who provided me with the [original sample code](https://github.com/davidfowl/SignalR.Relay).
 
