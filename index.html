@@ -46,15 +46,9 @@
 
 <p>SignalGrr is just an angrier, more impulsive <a href="https://github.com/SignalR/SignalR">SignalR</a> proxy server. Why angrier? I'm not sure. Why more impulsive? Because it's so damn simple to spin up a hub using pure javascript. I made two simple jquery plugins using SignalGrr already: <a href="http://timheckel.github.com/SignalRamp/">jquery.signalRamp.js - easy UI syncing</a>  and <a href="http://timheckel.github.com/ZyngaScroller/">jquery.zyngaScroller.js - real-time kinetic scrolling</a>. </p>
 
-<h3>Big Picture And Shameless Plug</h3>
-
-<p>I think the concept of comet as a service is very compelling, and SignalR as an application framework has resonated with me for a long time, especially in a world with <a href="http://meteor.com">these crazy ideas bursting forth</a>. I have some ideas regarding data persistence inside the <a>jquery.signalRamp.js</a> concept, but alas that's a larger topic. More to come.</p>
-
-<p>I'm also the creator of (wait for it) <a href="http://slatebox.com">Slatebox.com</a> and have been using SignalR since the earl(ier) days. It's <strong>Grr</strong>eat, this thing. For reals. And so is SignalR. Ugh, I'm such a man-whore to capitalism.</p>
-
 <h3>Can you handle it?</h3>
 
-<p>Anyway, this whole client-side hub thing is so convenient, it made me want to shove it up on <a href="http://appharbor.com">AppHarbor</a>, so that's precisely what I did after upgrading the code to use the latest SignalR 1.0.0 javascript client and pulling the latest code from the SignalR repository.</p>
+<p>It's so convenient, it made me want to shove it up on <a href="http://appharbor.com">AppHarbor</a>, so that's precisely what I did after upgrading the code to use the latest SignalR 1.0.0 javascript client and pulling the latest code from the SignalR repository.</p>
 
 <p>Now, if you're just wanting to schlep data between clients, stop worrying about the server side hub. Just write <code>var conn = $.hubConnection("http://signalGrr.apphb.com")</code> inside your javascript and you've got your entire hub!</p>
 
@@ -79,6 +73,10 @@
     });
 });
 </code></pre>
+
+<h3>Big Picture</h3>
+
+<p>SignalR as an application framework has resonated with me for a long time, especially in a world with <a href="http://meteor.com">these crazy ideas bursting forth</a>. I have some ideas regarding data persistence inside the <a>jquery.signalRamp.js</a> concept, but alas that's a larger topic. More to come.</p>
       </section>
 
     </div>
