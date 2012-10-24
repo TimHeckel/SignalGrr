@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>SignalGrr by TimHeckel</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/TimHeckel/SignalGrr">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/TimHeckel/SignalGrr/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/TimHeckel/SignalGrr/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>SignalGrr</h1>
+          <p>A SignalR server that allows hubs to be defined purely in client-side javascript.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/TimHeckel">TimHeckel</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h3>Props be first</h3>
+
+<p>The whole thing is inspired by David Fowler's <a href="https://github.com/davidfowl/SignalR.Relay">example code</a>.</p>
+
+<h3>What is SignalGrr?</h3>
+
+<p>SignalGrr is just an angrier, more impulsive <a href="https://github.com/SignalR/SignalR">SignalR</a> proxy server. Why angrier? I'm not sure. Why more impulsive? Because it's so damn simple to spin up a hub using pure javascript. I made two simple jquery plugins using SignalGrr already: <a href="http://timheckel.github.com/SignalRamp/">jquery.signalRamp.js - easy UI syncing</a>  and <a href="http://timheckel.github.com/ZyngaScroller/">jquery.zyngaScroller.js - real-time kinetic scrolling</a>. </p>
+
+<h3>Can you handle it?</h3>
+
+<p>It's so convenient, it made me want to shove it up on <a href="http://appharbor.com">AppHarbor</a>, so that's precisely what I did after upgrading the code to use the latest SignalR 1.0.0 javascript client and pulling the latest code from the SignalR repository.</p>
+
+<p>Now, if you're just wanting to schlep data between clients, stop worrying about the server side hub. Just write <code>var conn = $.hubConnection("http://signalGrr.apphb.com")</code> inside your javascript and you've got your entire hub!</p>
+
+<h3>DISCLAIMER</h3>
+
+<p>I know SignalR alpha is nearing completion, so the api will likely change. I'll do my best to keep SignalGrr up to date with the latest javascript client and code.</p>
+
+<h3>Client Usage</h3>
+
+<p>This is inspired by David's original source:</p>
+
+<pre><code>$(function () {
+  var connection = $.hubConnection("http://signalgrr.apphb.com"),
+    chat = connection.createProxy('chat');
+
+    chat.on('foo', function (n) {
+        console.log(n);
+    });
+
+    connection.start().done(function () {
+        chat.invoke('foo', "If Jimmy Chitwood transfers to Terhune, we don't have a prayer this year");
+    });
+});
+</code></pre>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-35769235-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
