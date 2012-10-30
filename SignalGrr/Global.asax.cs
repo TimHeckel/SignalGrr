@@ -60,10 +60,14 @@ namespace SignalGrr
                 Hub = hub,
                 Invoker = (h, args) =>
                 {
-                    IClientProxy proxy = h.Clients.All;
-
                     var pkg = ((dynamic)args[0]);
 
+                    IClientProxy proxy = h.Clients.All;
+                    if (((dynamic)pkg).recipient == "OTHERS")
+                        proxy = h.Clients.Others;
+                    else if (((dynamic)pkg).recipient == "SELF")
+                        proxy = h.Clients.Caller;                   
+                     
                     var _appId = h.Context.ConnectionId;
                     var _clientId = pkg.clientId.ToString();
 
