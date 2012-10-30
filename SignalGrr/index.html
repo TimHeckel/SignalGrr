@@ -3,41 +3,88 @@
 <head>
     <title>SignalGrr - Simple Example</title>
     <style type="text/css">
-        #messages { margin:10px;padding:10px;border:1px dashed #ccc;background-color:#F8F8F8; }
-        .msg { clear:both; padding: 5px 1px 5px 1px; border-bottom: 1px dashed #ccc; }
-        .msg span { width:150px; }
+        #messages
+        {
+            margin: 10px;
+            padding: 10px;
+            border: 1px dashed #ccc;
+            background-color: #F8F8F8;
+        }
+        #sender
+        {
+            margin: 3px;
+            padding: 3px;
+        }
+        .msg
+        {
+            clear: both;
+            padding: 5px 1px 5px 1px;
+            border-bottom: 1px dashed #ccc;
+        }
+        .msg span
+        {
+            width: 150px;
+        }
+        
+        .inputHeader
+        {
+            padding: 3px;
+            margin: 3px;
+            border-bottom: 1px solid #ccc;
+        }
+        .input
+        {
+            padding: 3px;
+            margin: 3px;
+        }
     </style>
     <script src="Scripts/jquery-1.6.4.js"></script>
+    <script src="Scripts/underscore.js"></script>
     <script src="Scripts/jquery.signalR-1.0.0.js"></script>
+    <script src="Scripts/jquery.signalRamp.js"></script>
+    <script src="Scripts/jquery.appBoxr.js"></script>
     <script>
-        $(function () {
-            var connection = $.hubConnection(),
-                chat = connection.createProxy('chat'),
-                msgs = [];
-
-            chat.on('msg', function (n) {
-                msgs.push(["<div class='msg'><span>", new Date().toLocaleTimeString(), ":</span> ", n, "</div>"].join(''));
-                $("#messages").html(msgs.concat().reverse().join(''));
-            });
-
-            connection.start().done(function () {
-                chat.invoke('msg', "Welcome to SignalGrr, all credit to David Fowler. No Server Side Hub required.");
-            });
-            $("#btn").click(function () {
-                $("#txtMsg").css({ backgroundColor: "transparent" });
-                if ($("#txtMsg").val() !== "")
-                    chat.invoke('msg', $("#txtMsg").val());
-                else
-                    $("#txtMsg").css({ backgroundColor: "red" });
+        $(document).ready(function () {
+            $.appBoxr({
+                appId: "first_app_id"
+                , url: "http://localhost:1975"
             });
         });
     </script>
 </head>
-<body>
-    Message: <input type='text' id='txtMsg' />
-    <br /><br />
-    <button id='btn'>send</button>
-    <div id="messages">
+<body data-page="EmployeePage">
+    <div>
+        <div class="inputHeader">
+            Employee
+        </div>
+        <div data-model="Employee">
+            <div class="input">
+                <span>First Name</span>
+                <input type="text" id="txtFirstName" data-property="FirstName" />
+            </div>
+            <div class="input">
+                <span>Last Name</span>
+                <input type="text" id="txtLastName" data-property="LastName" />
+            </div>
+            <div class="input">
+                <label for="chkFullTime">
+                    <input type="checkbox" id="chkFullTime" data-property="IsFullTime" />
+                    Is Full Time?
+                </label>
+            </div>
+            <div data-model="Family">
+                <div class="input">
+                    <span>Number of Children</span>
+                    <input type="text" id="txtChildren" data-property="NumberOfChildren" />
+                </div>
+                 <div data-model="Pets">
+                    <div class="input">
+                        <span>Dog Name</span>
+                        <input type="text" id="txtDogName" data-property="DogName" />
+                    </div>
+                 </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

@@ -8,6 +8,7 @@ using System.Web.Routing;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace SignalGrr
 {
@@ -29,12 +30,11 @@ namespace SignalGrr
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            RouteTable.Routes.MapHubs(); 
+            RouteTable.Routes.MapHubs();
 
-            var dynamicProvider = new RelayDescriptorProvider();
-            GlobalHost.DependencyResolver.Register(typeof(IHubDescriptorProvider), () => dynamicProvider);
-            var methodProvider = new RelayMethodDescriptorProvider();
-            GlobalHost.DependencyResolver.Register(typeof(IMethodDescriptorProvider), () => methodProvider);
+            GlobalHost.DependencyResolver.Register(typeof(IDataLayer), () => new RedisDataLayer());
+            GlobalHost.DependencyResolver.Register(typeof(IHubDescriptorProvider), () => new RelayDescriptorProvider());
+            GlobalHost.DependencyResolver.Register(typeof(IMethodDescriptorProvider), () => new RelayMethodDescriptorProvider());
         }
     }
 
@@ -61,6 +61,34 @@ namespace SignalGrr
                 Invoker = (h, args) =>
                 {
                     IClientProxy proxy = h.Clients.All;
+
+                    var pkg = ((dynamic)args[0]);
+
+                    var _appId = h.Context.ConnectionId;
+                    var _clientId = pkg.clientId.ToString();
+
+                    if (pkg.appBoxr != null)
+                    {
+                        var _repo = GlobalHost.DependencyResolver.Resolve<IDataLayer>();
+                        var appBoxr = pkg.appBoxr;
+                        
+                        var _op = false;
+                        string _model = "";
+
+                        string _passedModel = ((dynamic)appBoxr).model.ToString().Replace(Environment.NewLine, "");
+                        string process = ((dynamic)appBoxr).process.ToString();
+                        string _pageId = ((dynamic)appBoxr).pageId.ToString();
+
+                        if (process == "GET")
+                            _model = _repo.Get(new { applicationId = _appId, segmentId = _pageId, clientId = _clientId });
+                        else if (process == "SAVE")
+                            _op = _repo.Save(new { applicationId = _appId, segmentId = _pageId, clientId = _clientId }, _passedModel);
+                        else if (process == "DELETE")
+                            _op = _repo.Delete(new { applicationId = _appId, segmentId = _pageId, clientId = _clientId });
+
+                        args.ToList().Add(JsonConvert.SerializeObject(new { operationResult = _op, model = _model }));
+                    }
+
                     return proxy.Invoke(method, args);
                 },
                 Name = method,
