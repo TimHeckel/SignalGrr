@@ -1,4 +1,5 @@
 ﻿/*
+* signalRamp v. 0.0.1
 * Created by Tim Heckel, &copy; 2012 
 * Licensed under the MIT.
 */

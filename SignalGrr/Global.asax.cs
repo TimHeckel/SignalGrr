@@ -69,10 +69,10 @@ namespace SignalGrr
                         proxy = h.Clients.Caller;                   
                      
                     var _appId = h.Context.ConnectionId;
-                    var _clientId = pkg.clientId.ToString();
-
+                    
                     if (pkg.appBoxr != null)
                     {
+                        var _clientId = pkg.clientId.ToString();
                         var _repo = GlobalHost.DependencyResolver.Resolve<IDataLayer>();
                         var appBoxr = pkg.appBoxr;
                         
