@@ -3,6 +3,8 @@
 <head>
     <title>SignalGrr - Simple Example</title>
     <style type="text/css">
+        body { font-family: Trebuchet MS; }
+        
         #messages
         {
             margin: 10px;
@@ -30,13 +32,20 @@
         {
             padding: 3px;
             margin: 3px;
-            border-bottom: 1px solid #ccc;
         }
         .input
         {
             padding: 3px;
             margin: 3px;
         }
+        .input span { display: inline-block; padding:3px; width:100px; }
+        
+        [data-model] { margin:10px; border:1px solid #ccc; }
+        [data-model] legend { padding:5px; font-size: 15pt; }
+        [data-model="Family"] { margin-left: 20px; }
+        [data-model="Pets"] { margin-left: 40px; }
+        [data-prop] { margin-left: 20px; }
+        
     </style>
     <script src="Scripts/jquery-1.6.4.js"></script>
     <script src="Scripts/underscore.js"></script>
@@ -52,12 +61,11 @@
         });
     </script>
 </head>
+
 <body data-page="EmployeePage">
     <div>
-        <div class="inputHeader">
-            Employee
-        </div>
-        <div data-model="Employee">
+        <fieldset data-model="Employee">
+            <legend>Employee</legend>
             <div class="input">
                 <span>First Name</span>
                 <input type="text" id="txtFirstName" data-property="FirstName" />
@@ -67,24 +75,28 @@
                 <input type="text" id="txtLastName" data-property="LastName" />
             </div>
             <div class="input">
+                <span></span>
                 <label for="chkFullTime">
                     <input type="checkbox" id="chkFullTime" data-property="IsFullTime" />
                     Is Full Time?
                 </label>
             </div>
-            <div data-model="Family">
+            <fieldset data-model="Family">
+                <legend>Family</legend>
                 <div class="input">
                     <span>Number of Children</span>
                     <input type="text" id="txtChildren" data-property="NumberOfChildren" />
                 </div>
-                 <div data-model="Pets">
+                 <fieldset data-model="Pets">
+                    <legend>Pets</legend>
                     <div class="input">
                         <span>Dog Name</span>
                         <input type="text" id="txtDogName" data-property="DogName" />
                     </div>
-                 </div>
-            </div>
-        </div>
+                 </fieldset>
+            </fieldset>
+        </fieldset>
     </div>
 </body>
+
 </html>
