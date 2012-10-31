@@ -63,9 +63,9 @@ namespace SignalGrr
                     var pkg = ((dynamic)args[0]);
 
                     IClientProxy proxy = h.Clients.All;
-                    if (((dynamic)pkg).recipient == "OTHERS")
+                    if (pkg.recipient == "OTHERS")
                         proxy = h.Clients.Others;
-                    else if (((dynamic)pkg).recipient == "SELF")
+                    else if (pkg.recipient == "SELF")
                         proxy = h.Clients.Caller;                   
                      
                     var _appId = h.Context.ConnectionId;
@@ -84,11 +84,11 @@ namespace SignalGrr
                         string _pageId = ((dynamic)appBoxr).pageId.ToString();
 
                         if (process == "GET")
-                            _model = _repo.Get(new { applicationId = _appId, segmentId = _pageId, clientId = _clientId });
+                            _model = _repo.Get(new { applicationId = _appId, pageId = _pageId, clientId = _clientId });
                         else if (process == "SAVE")
-                            _op = _repo.Save(new { applicationId = _appId, segmentId = _pageId, clientId = _clientId }, _passedModel);
+                            _op = _repo.Save(new { applicationId = _appId, pageId = _pageId, clientId = _clientId }, _passedModel);
                         else if (process == "DELETE")
-                            _op = _repo.Delete(new { applicationId = _appId, segmentId = _pageId, clientId = _clientId });
+                            _op = _repo.Delete(new { applicationId = _appId, pageId = _pageId, clientId = _clientId });
 
                         args.ToList().Add(JsonConvert.SerializeObject(new { operationResult = _op, model = _model }));
                     }
