@@ -62,14 +62,15 @@ namespace SignalGrr
                 {
                     var pkg = ((dynamic)args[0]);
 
-                    IClientProxy proxy = h.Clients.All;
-                    if (pkg.recipient == "OTHERS")
-                        proxy = h.Clients.Others;
-                    else if (pkg.recipient == "SELF")
+                    //default to broadcast only to others
+                    IClientProxy proxy = h.Clients.Others;
+                    if (pkg.recipients == "ALL")
+                        proxy = h.Clients.All;
+                    else if (pkg.recipients == "SELF")
                         proxy = h.Clients.Caller;                   
                      
                     var _appId = h.Context.ConnectionId;
-                    
+
                     if (pkg.appBoxr != null)
                     {
                         var _clientId = pkg.clientId.ToString();

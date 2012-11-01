@@ -47,6 +47,14 @@
       <HintPath>Lib\Microsoft.AspNet.SignalR.Hosting.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MongoDB.Bson, Version=1.6.1.4678, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\mongocsharpdriver.1.6.1\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=1.6.1.4678, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\mongocsharpdriver.1.6.1\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack.Common">
       <HintPath>..\packages\ServiceStack.Common.3.9.25\lib\net35\ServiceStack.Common.dll</HintPath>
     </Reference>
@@ -125,11 +133,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\RESTController.cs" />
     <Compile Include="Enums\ProcessType.cs" />
+    <Compile Include="Extensions\Data.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IClientQuery.cs" />
+    <Compile Include="Repositories\MongoDataLayer.cs" />
     <Compile Include="Repositories\RedisDataLayer.cs" />
     <Compile Include="Repositories\IDataLayer.cs" />
   </ItemGroup>
@@ -137,7 +149,7 @@
     <Content Include="Global.asax" />
     <Content Include="index.html" />
     <Content Include="Scripts\jquery-1.6.4.js" />
-    <Content Include="Scripts\jquery.appBoxr.js" />
+    <Content Include="Scripts\jQuery.appBoxr.js" />
     <Content Include="Scripts\jquery.signalR-1.0.0.js" />
     <Content Include="Scripts\jquery.signalRamp.js" />
     <Content Include="Scripts\underscore.js" />
@@ -147,7 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

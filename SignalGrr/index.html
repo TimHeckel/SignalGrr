@@ -3,7 +3,10 @@
 <head>
     <title>SignalGrr - Simple Example</title>
     <style type="text/css">
-        body { font-family: Trebuchet MS; }
+        body
+        {
+            font-family: Trebuchet MS;
+        }
         
         #messages
         {
@@ -38,14 +41,35 @@
             padding: 3px;
             margin: 3px;
         }
-        .input span { display: inline-block; padding:3px; width:100px; }
+        .input span
+        {
+            display: inline-block;
+            padding: 3px;
+            width: 100px;
+        }
         
-        [data-model] { margin:10px; border:1px solid #ccc; }
-        [data-model] legend { padding:5px; font-size: 15pt; }
-        [data-model="Family"] { margin-left: 20px; }
-        [data-model="Pets"] { margin-left: 40px; }
-        [data-prop] { margin-left: 20px; }
-        
+        [data-model]
+        {
+            margin: 10px;
+            border: 1px solid #ccc;
+        }
+        [data-model] legend
+        {
+            padding: 5px;
+            font-size: 15pt;
+        }
+        [data-model="Family"]
+        {
+            margin-left: 20px;
+        }
+        [data-model="Pets"]
+        {
+            margin-left: 40px;
+        }
+        [data-prop]
+        {
+            margin-left: 20px;
+        }
     </style>
     <script src="Scripts/jquery-1.6.4.js"></script>
     <script src="Scripts/underscore.js"></script>
@@ -54,16 +78,22 @@
     <script src="Scripts/jquery.appBoxr.js"></script>
     <script>
         $(document).ready(function () {
-            $.appBoxr({
+            $.signalGrr({
                 appId: "first_app_id"
                 , url: "http://localhost:1975"
             });
         });
     </script>
 </head>
-
 <body data-page="EmployeePage">
     <div>
+        <fieldset data-model="ThirdSet">
+            <legend>Third Data</legend>
+            <div class="input">
+                <span>Third Property</span>
+                <input type="text" id="Text1" data-property="ThirdProp" />
+            </div>
+        </fieldset>
         <fieldset data-model="Employee">
             <legend>Employee</legend>
             <div class="input">
@@ -87,16 +117,22 @@
                     <span>Number of Children</span>
                     <input type="text" id="txtChildren" data-property="NumberOfChildren" />
                 </div>
-                 <fieldset data-model="Pets">
+                <fieldset data-model="Pets">
                     <legend>Pets</legend>
                     <div class="input">
                         <span>Dog Name</span>
                         <input type="text" id="txtDogName" data-property="DogName" />
                     </div>
-                 </fieldset>
+                </fieldset>
             </fieldset>
         </fieldset>
     </div>
+    <fieldset data-model="SecondaryData">
+        <legend>Second Data</legend>
+        <div class="input">
+            <span>Second Property</span>
+            <input type="text" id="txtSF" data-property="SomeProperty" />
+        </div>
+    </fieldset>
 </body>
-
 </html>

@@ -8,11 +8,11 @@
 
     if (typeof ($.signalR) !== "function") {
         // no jQuery!
-        throw new Error("AppBoxr: SignalR not found. Please ensure SignalR is referenced to use appBoxr.");
+        throw new Error("SignalGrr: SignalR not found. Please ensure SignalR is referenced to use SignalGrr.");
     }
 
     if (typeof ($("<div/>").signalRamp) !== "function") {
-        throw new Error("AppBoxr: jquery.signalRamp not found. Please ensure jquery.signalRamp is referenced to use appBoxr.");
+        throw new Error("SignalGrr: jquery.signalRamp not found. Please ensure jquery.signalRamp is referenced to use SignalGrr.");
     }
 
     var _appBoxr = function (_options) {
@@ -22,6 +22,10 @@
         //defaults
         var options = {
             appId: ''
+            , callbacks: {
+                bridgeInitialized: null
+                , bridgeStarted: null
+            }
         }
 
         $.extend(options, _options);
@@ -40,6 +44,15 @@
                     , dataReceive: function (pkg) {
                         //TODO: Check result of sync
                     }
+                    , bridgeInitialized: function (bridge, done) {
+                        if (options.callbacks.bridgeInitialized)
+                            options.callbacks.bridgeInitialized(bridge, done);
+                        else
+                            done();
+                    }
+                    , bridgeStarted: function (proxyName, bridge) {
+                        options.callbacks.bridgeStarted && options.callbacks.bridgeStarted(proxyName, bridge);
+                    }
                 }
             });
         };
@@ -51,7 +64,7 @@
                 }
             }
             , assembleModel: function () {
-                var _model = {}, _segmentId = "", _currentObj = {}, _nest = [];
+                var _models = [], _segmentId = "", _currentObj = {}, _nests = [], _nest = [];
 
                 $.each($(":*[data-model]").get().reverse(), function () {
                     var _mod = $(this);
@@ -66,12 +79,36 @@
                             _val = _next.attr("checked") === "checked" ? true : false;
                         _stub.props[_next.data("property")] = _val;
                     });
+
+
+                    //check the DOM to ensure the fidelity of the heirarchy hold
+                    //basically, are there any other data-models above this one? 
+                    //if so, don't reset to a new model yet
+                    if (_nest.length > 0) {
+                        var nc;
+                        checker: for (nc = 0; nc < _nest.length; nc++) {
+                            if ($(":*[data-model='" + _nest[nc].name + "']").parents(":*[data-model]").length === 0) {
+                                //var _top = _nest.pop();
+                                _nests.push(_nest);
+                                _nest = []; // [_top];
+                                break checker;
+                            }
+                        }
+                    }
+
                     _nest.push(_stub);
                 });
 
-                locals.nest(_model, _.pluck(_nest, 'name').reverse(), _nest);
+                //add any remaining
+                if (_nest.length > 0) _nests.push(_nest);
 
-                return { model: _model, pageId: $("body").data("page") };
+                $.each(_nests, function () {
+                    var n = this, _model = {};
+                    locals.nest(_model, _.pluck(n, 'name').reverse(), n);
+                    _models.push(_model);
+                });
+
+                return { models: _models, pageId: $("body").data("page") };
             }
         }
 

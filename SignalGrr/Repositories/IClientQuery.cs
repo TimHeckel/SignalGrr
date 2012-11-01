@@ -5,10 +5,8 @@ using System.Text;
 
 namespace SignalGrr
 {
-    public interface IDataLayer
+    public interface IClientQuery
     {
         dynamic Get(dynamic lookup);
-        bool Save(dynamic lookup, string dataModel);
-        bool Delete(dynamic lookup);
     }
 }
